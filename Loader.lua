@@ -1,6 +1,3 @@
--- Loader.lua
-local repo = "https://raw.githubusercontent.com/CaramanCompany/scripts/main/"
-
 local gameId = game.PlaceId
 local supportedGames = {
     [142823291] = "mm2.lua", -- Murder Mystery 2
