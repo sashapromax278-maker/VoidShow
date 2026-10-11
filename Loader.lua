@@ -1,27 +1,28 @@
+local repo = "https://raw.githubusercontent.com/sashapromax278-maker/VoidShow/main/"
+
 local gameId = game.PlaceId
 local supportedGames = {
-    [142823291] = "mm2.lua", -- Murder Mystery 2
-    -- Сюда можно добавлять другие игры:
-    -- [PLACE_ID] = "another_game.lua",
+    [142823291] = "games/mm2.lua", -- Murder Mystery 2
 }
 
-local scriptFile = supportedGames[gameId]
+local scriptPath = supportedGames[gameId]
 
-if scriptFile then
+if scriptPath then
+    local url = repo .. scriptPath
     local success, result = pcall(function()
-        return game:HttpGet(repo .. "games/" .. scriptFile)
+        return game:HttpGet(url)
     end)
     
-    if success and result then
+    if success and result and result ~= "404: Not Found" then
         local fn, err = loadstring(result)
         if fn then
             fn()
         else
-            warn("Loader Error: Failed to parse script - " .. tostring(err))
+            warn("VoidShow Error: Синтаксическая ошибка в скрипте - " .. tostring(err))
         end
     else
-        warn("Loader Error: Failed to download script from repository.")
+        warn("VoidShow Error: Не удалось загрузить файл по адресу: " .. url)
     end
 else
-    print("Loader: This game is not supported.")
+    print("VoidShow: Игра не поддерживается.")
 end
